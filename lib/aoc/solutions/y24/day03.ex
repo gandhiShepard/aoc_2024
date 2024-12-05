@@ -77,7 +77,6 @@ defmodule Aoc.Solutions.Y24.Day03 do
 
   defp do_parse(<<_c, rest::binary>>, acc), do: do_parse(rest, acc)
 
-
   defp do_parse2("", _status, acc), do: Enum.sum(acc)
 
   defp do_parse2("don't()" <> rest, :on, acc), do: do_parse2(rest, :off, acc)
