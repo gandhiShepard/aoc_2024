@@ -8,20 +8,20 @@ defmodule Aoc.Solutions.Y24.Day05 do
 
   def part_one(problem) do
     problem
-    |> format_data()
+    |> data_to_rules_and_page_list()
     |> find_ordered_pages()
     |> sum_of_middle_item_in_list()
   end
 
   def part_two(problem) do
     problem
-    |> format_data()
+    |> data_to_rules_and_page_list()
     |> find_unordered_pages()
     |> fix_unordered_pages()
     |> sum_of_middle_item_in_list()
   end
 
-  defp format_data(data) do
+  defp data_to_rules_and_page_list(data) do
     Enum.reduce(data, {%{}, []}, fn
       "", acc ->
         acc
