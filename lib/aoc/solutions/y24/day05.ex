@@ -30,20 +30,22 @@ defmodule Aoc.Solutions.Y24.Day05 do
         {Map.put(rules, [left, right], 0), pages}
 
       line, {rules, pages} ->
-        line_to_list = String.split(line, [",", "\n"] , trim: true)
+        line_to_list = String.split(line, [",", "\n"], trim: true)
 
         {rules, [line_to_list | pages]}
     end)
   end
 
   defp find_ordered_pages({rules, pages_list}) do
-    for pages <- pages_list, Enum.all?(Enum.chunk_every(pages, 2, 1, :discard), fn x -> Map.has_key?(rules, x) end) do
+    for pages <- pages_list,
+        Enum.all?(Enum.chunk_every(pages, 2, 1, :discard), fn x -> Map.has_key?(rules, x) end) do
       pages
     end
   end
 
   defp find_unordered_pages({rules, pages_list}) do
-    for pages <- pages_list, !Enum.all?(Enum.chunk_every(pages, 2, 1, :discard), fn x -> Map.has_key?(rules, x) end) do
+    for pages <- pages_list,
+        !Enum.all?(Enum.chunk_every(pages, 2, 1, :discard), fn x -> Map.has_key?(rules, x) end) do
       {rules, pages}
     end
   end
@@ -55,12 +57,16 @@ defmodule Aoc.Solutions.Y24.Day05 do
 
   defp fix_list(rules, list), do: do_fix(rules, list, [], :ordered)
 
-  defp do_fix(rules, [page], acc, :not_ordered), do: do_fix(rules, Enum.reverse([page | acc]), [], :ordered)
+  defp do_fix(rules, [page], acc, :not_ordered),
+    do: do_fix(rules, Enum.reverse([page | acc]), [], :ordered)
+
   defp do_fix(_rules, [page], acc, :ordered), do: Enum.reverse([page | acc])
 
   defp do_fix(rules, [head, next | rest], acc, sort_order) when is_map_key(rules, [head, next]),
-    do:  do_fix(rules, [next | rest], [head | acc], sort_order)
-  defp do_fix(rules, [head, next | rest], acc, _sort_order), do:  do_fix(rules, [next, head | rest], acc, :not_ordered)
+    do: do_fix(rules, [next | rest], [head | acc], sort_order)
+
+  defp do_fix(rules, [head, next | rest], acc, _sort_order),
+    do: do_fix(rules, [next, head | rest], acc, :not_ordered)
 
   defp sum_of_middle_item_in_list(pages_list) do
     for pages <- pages_list, reduce: 0 do
