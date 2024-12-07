@@ -20,15 +20,8 @@ defmodule Aoc.Solutions.Y24.Day06 do
     # |> dbg()
   end
 
-  def part_two(problem) do
-    map = generate_lab_map(problem)
-    [guard_position] = find_guard(map)
-
-    navigate(map, :north, guard_position, %{guard_position => 1})
-    |> Enum.count(fn {_k, v} -> v > 1 end)
-    |> Kernel.*(2)
-    |> Kernel.-(2)
-  end
+  # def part_two(problem) do
+  # end
 
   defp navigate(map, :north, current_position, acc) do
     case try_north(map, current_position) do
